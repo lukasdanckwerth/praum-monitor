@@ -1,3 +1,7 @@
+#!/bin/bash
+set -u
+set -e
+
 if [ -z "$SUDO_USER" ]; then
   echo "This script is only allowed to run from sudo"
   exit 1
@@ -61,3 +65,9 @@ if [[ ! -d "${I_PROJECT_DIR}" ]]; then
 fi
 
 #sudo chown pi:pi /srv/praum-monitor
+
+echo "Installing yarn..."
+curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+sudo apt update --assume-yes
+sudo apt install yarn --assume-yes

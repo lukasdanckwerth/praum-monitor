@@ -95,6 +95,18 @@ python3 dev-server.py
 
 ## Installation
 
+
+
+### Installation script ([script 📃](bin/install.sh))
+
+> Be careful using this scripts. Always check content before running a script with `sudo`.
+
+```bash
+sudo /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/lukasdanckwerth/praum-monitor/main/bin/install.sh)"
+```
+
+
+
 ### Update and install packages
 
 ```bash
