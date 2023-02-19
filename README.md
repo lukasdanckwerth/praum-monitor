@@ -46,13 +46,13 @@ Motion Sensor
 
 ## GPIOs
 
-![](/Users/lukas/Developer/Others/praum-monitor/doc/rpi-gpio.jpg)
+![](doc/rpi-gpio.jpg)
 
-![](/Users/lukas/Developer/Others/praum-monitor/doc/mcp3008.png)
+![](doc/mcp3008.png)
 
 ### Connecting RaspberryPi and MCP3008
 
-![](/Users/lukas/Developer/Others/praum-monitor/doc/rpi-mcp3008.webp)
+![](doc/rpi-mcp3008.webp)
 
 ### GPIO distribution
 
@@ -83,7 +83,33 @@ Motion Sensor
 |                 |                  | traffic light 3 Red    |
 |                 |                  | traffic light 3 GND    |
 
-## Operations
+## Development
+
+### dev-server
+
+Start a local http server for development with.
+
+```bash
+python3 dev-server.py
+```
+
+## Installation
+
+### Update and install packages
+
+```bash
+sudo apt-get update --assume-yes && \
+sudo apt-get upgrade --assume-yes && \
+sudo apt-get install --assume-yes vim git && \
+sudo apt-get install --assume-yes python-dev
+```
+
+Expand file system `"Advanced Options"` -> `"Expand Filesystem"` and activate SPI with `"Interface Options"` -> `"SPI"`.
+
+```bash
+sudo raspi-config
+```
+
 
 ### Install samba
 
@@ -95,10 +121,20 @@ sudo smbpasswd -a pi
 sudo vim /etc/samba/smb.conf
 sudo mkdir /srv/praum-monitor
 sudo chown pi:pi /srv/praum-monitor
-sudo chmod 775 /srv/praum-monitor
+sudo chmod 777 /srv/praum-monitor
 ```
 
 See [smb.conf](assets/smb.config).
+
+### Install py-spidev lib
+```bash
+pushd /srv/
+wget https://github.com/doceme/py-spidev/archive/master.zip -O py-spidev.zip
+unzip py-spidev.zip
+cd py-spidev-master
+sudo python3 setup.py install
+popd
+```
 
 ## Disable display sleep
 
@@ -161,12 +197,4 @@ Add the following line to your `/etc/xdg/lxsession/LXDE-pi/autostart` file.
 @unclutter -idle 0.1 -root
 ```
 
-## Development
 
-### dev-server
-
-Start a local http server for development with.
-
-```bash
-python3 dev-server.py
-```
