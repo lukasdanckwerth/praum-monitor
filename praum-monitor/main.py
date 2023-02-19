@@ -13,6 +13,8 @@ MQ135_GASES = ["ACETON", "TOLUENO", "ALCOHOL", "CO2", "NH4", "CO"]
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
+    print("Press CTRL+C to abort.")
+
     data_directory = DataDirectory("data")
 
     GPIO.setwarnings(False)
