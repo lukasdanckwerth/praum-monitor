@@ -24,11 +24,7 @@ class SoundSensor():
         # create an analog input channel on pin 3 for SoundSensor
         self.chan_SoundSensor = AnalogIn(mcp, MCP.P2)
 
-        print("Starting SoundSensor")
-        # print("Calibrating SoundSensor...")
-        # self.Ro = self.MQ4_Calibration()
-        # print("MQ-4 Ro=%f kohm" % self.Ro)
-        print("\n")
+        print("SoundSensor started")
 
     def read(self):
         return self.chan_SoundSensor.value

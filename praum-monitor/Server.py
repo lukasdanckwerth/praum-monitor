@@ -1,7 +1,7 @@
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from http import HTTPStatus
+from threading import Thread
 import json
-import time
 
 # Sample blog post data similar to
 # https://ordina-jworks.github.io/frontend/2019/03/04/vue-with-typescript.html#4-how-to-write-your-first-component
@@ -54,10 +54,23 @@ class _RequestHandler(BaseHTTPRequestHandler):
 
 
 def run_server():
-    server_address = ('', 8001)
-    httpd = HTTPServer(server_address, _RequestHandler)
-    print('serving at %s:%d' % server_address)
-    httpd.serve_forever()
+    print("Initializing server")
+
+    httpd = HTTPServer(('', 8001), _RequestHandler, False)
+    httpd.server_bind()
+    httpd.server_activate()
+
+    print('Serving at %s:%d' % httpd.server_address)
+
+    def serve_forever(httpd):
+        with httpd:  # to make sure httpd.server_close is called
+            print("Server will server forever\n")
+            httpd.serve_forever()
+            print("Server left infinite request loop")
+
+    thread = Thread(target=serve_forever, args=(httpd,))
+    thread.setDaemon(True)
+    thread.start()
 
 
 if __name__ == '__main__':
