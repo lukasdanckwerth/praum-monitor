@@ -1,5 +1,24 @@
 # praum-monitor
 
+<!-- TOC -->
+
+* [praum-monitor](#praum-monitor)
+    * [Readings](#readings)
+    * [GPIOs](#gpios)
+        * [Connecting RaspberryPi and MCP3008](#connecting-raspberrypi-and-mcp3008)
+        * [GPIO distribution](#gpio-distribution)
+    * [Operations](#operations)
+        * [Install samba](#install-samba)
+    * [Disable display sleep](#disable-display-sleep)
+    * [Install Firefox](#install-firefox)
+    * [Autostart Firefox](#autostart-firefox)
+    * [Hide taskbar / menubar](#hide-taskbar--menubar)
+    * [Make the mouse disappear](#make-the-mouse-disappear)
+    * [Development](#development)
+        * [dev-server](#dev-server)
+
+<!-- TOC -->
+
 ## Readings
 
 MQ-4
@@ -24,7 +43,6 @@ Sound Sensor
 Analoge werte von 0 1024.
 
 Motion Sensor
-
 
 ## GPIOs
 
@@ -81,7 +99,6 @@ sudo chmod 775 /srv/praum-monitor
 ```
 
 See [smb.conf](assets/smb.config).
-
 
 ## Disable display sleep
 
