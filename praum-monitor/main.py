@@ -7,6 +7,7 @@ from sensors.MQ135 import MQ135
 from sensors.SoundSensor import SoundSensor
 from devices.TrafficLight import TrafficLight
 from devices.PiezoBuzzer import PiezoBuzzer
+from Server import run_server
 
 MQ4_GASES = ["CH4", "LPG", "H2", "SMOKE", "ALCOHOL", "CO"]
 MQ135_GASES = ["ACETON", "TOLUENO", "ALCOHOL", "CO2", "NH4", "CO"]
@@ -29,6 +30,8 @@ if __name__ == '__main__':
     # tl3 = TrafficLight(gpio_green=21, gpio_yellow=22, gpio_red=23)
 
     pb = PiezoBuzzer(gpio=26)
+
+    run_server()
 
     try:
         while True:

@@ -1,0 +1,12 @@
+{
+    "name": "praum-monitor",
+    "version": "0.1.0",
+    "main": "web-app/main.js",
+    "scripts": {
+        "start": "node_modules/.bin/electron ."
+    },
+    "devDependencies": {
+        "child_process": "^1.0.2",
+        "electron": "^23.1.0"
+    }
+}
