@@ -1,6 +1,12 @@
 import os
+import json
+import io
+import csv
 from datetime import datetime, date
 from pathlib import Path
+
+HEADER = ["LOOP", "CH4", "LPG", "H2", "SMOKE", "ALCOHOL", "CO", "ACETON", "TOLUENO", "ALCOHOL_2", "CO2", "NH4", "CO_2",
+          "VOL", "MOV"]
 
 
 def is_dir(path):
@@ -39,6 +45,11 @@ class DataDirectory():
         self.last_session_file = self.last_session_file_path()
         self.create_session_file()
 
+        with open(self.session_file_path(), "a") as session_file:
+            csv_writer = csv.DictWriter(session_file, fieldnames=HEADER, delimiter=",")
+            csv_writer.writeheader()
+            session_file.close()
+
         print("DataDirectory")
         print("Start time: " + self.start_time_formatted)
         print("Last session file: " + self.last_session_file)
@@ -49,14 +60,6 @@ class DataDirectory():
 
     def current_month_dir(self):
         return self.current_year_dir() + "/" + current_month()
-
-    def status_file_path(self):
-        return self.path + "/status.txt"
-
-    def write_status_file(self, content):
-        f = open(self.status_file_path(), "w")
-        f.write(content)
-        f.close()
 
     def session_file_path(self):
         return self.current_month_dir() + "/" + self.start_time_formatted + ".csv"
@@ -83,7 +86,14 @@ class DataDirectory():
             return open(self.last_session_note(), "r").read()
         return ""
 
-    def add_record(self, content):
-        self.write_status_file(content)
-        self.append_session_file(content)
-        self.records_count += 1
+    def add_record(self, rec):
+        self.write_current_record(rec)
+        with open(self.session_file_path(), "a") as session_file:
+            csv_writer = csv.DictWriter(session_file, fieldnames=HEADER, delimiter=",")
+            csv_writer.writerow(rec)
+            session_file.close()
+
+    def write_current_record(self, record):
+        f = open(self.path + "/current_record.json", "w")
+        f.write(str(json.dumps(record)))
+        f.close()

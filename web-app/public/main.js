@@ -5,9 +5,15 @@ const {app, BrowserWindow, ipcMain, Notification} = require("electron");
 function createWindow() {
 
     const mainWindow = new BrowserWindow({
-        width: 1200,
-        height: 800,
-        resizable: true,
+        width: 800,
+        height: 600,
+
+        // Hide the title bar
+        frame: false,
+
+        // Hide the menu bar
+        autoHideMenuBar: true,
+
         webPreferences: {
             // preload: path.join(__dirname, 'gui_example.js'),
             // contextIsolation: true
@@ -20,6 +26,7 @@ function createWindow() {
 
     // Open the DevTools.
     mainWindow.webContents.openDevTools()
+    mainWindow.maximize()
 }
 
 // This method will be called when Electron has finished

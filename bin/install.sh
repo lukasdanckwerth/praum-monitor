@@ -2,8 +2,8 @@
 set -u
 set -e
 
-if [ -z "$SUDO_USER" ]; then
-  echo "This script is only allowed to run from sudo"
+if [ -z "${SUDO_USER:-}" ]; then
+  echo "This script must be run from sudo"
   exit 1
 fi
 
@@ -17,7 +17,8 @@ sudo apt-get install --assume-yes \
   vim \
   git \
   python-dev \
-  samba samba-common-bin
+  samba samba-common-bin \
+  unclutter
 
 (
   echo "${I_SMB_PASS}"

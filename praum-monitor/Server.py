@@ -2,38 +2,13 @@ from http.server import HTTPServer, BaseHTTPRequestHandler
 from http import HTTPStatus
 from threading import Thread
 import json
-
-# Sample blog post data similar to
-# https://ordina-jworks.github.io/frontend/2019/03/04/vue-with-typescript.html#4-how-to-write-your-first-component
-_g_posts = [
-    {
-        'title': 'My first blogpost ever!',
-        'body': 'Lorem ipsum dolor sit amet.',
-        'author': 'Elke',
-        'date_ms': 1593607500000,  # 2020 July 1 8:45 AM Eastern
-    },
-    {
-        'title': 'Look I am blogging!',
-        'body': 'Hurray for me, this is my second post!',
-        'author': 'Elke',
-        'date_ms': 1593870300000,  # 2020 July 4 9:45 AM Eastern
-    },
-    {
-        'title': 'Another one?!',
-        'body': 'Another one!',
-        'author': 'Elke',
-        'date_ms': 1594419000000,  # 2020 July 10 18:10 Eastern
-    }
-]
+import csv
 
 
 class _RequestHandler(BaseHTTPRequestHandler):
-    # Borrowing from https://gist.github.com/nitaku/10d0662536f37a087e1b
     def _set_headers(self):
         self.send_response(HTTPStatus.OK.value)
         self.send_header('Content-type', 'application/json')
-        # Allow requests from any origin, so CORS policies don't
-        # prevent local development.
         self.send_header('Access-Control-Allow-Origin', '*')
         self.end_headers()
 
@@ -41,6 +16,10 @@ class _RequestHandler(BaseHTTPRequestHandler):
         data = {
             "some": 12
         }
+        with open("data/current_record.json", "r") as session_file:
+            data = json.load(session_file)
+            session_file.close()
+
         self._set_headers()
         self.wfile.write(json.dumps(data).encode('utf-8'))
 
@@ -54,9 +33,9 @@ class _RequestHandler(BaseHTTPRequestHandler):
 
 
 def run_server():
-    print("Initializing server")
+    print("Start Server")
 
-    httpd = HTTPServer(('', 8001), _RequestHandler, False)
+    httpd = HTTPServer(('', 1312), _RequestHandler, False)
     httpd.server_bind()
     httpd.server_activate()
 

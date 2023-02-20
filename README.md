@@ -19,6 +19,13 @@
 
 <!-- TOC -->
 
+## Project
+
+| App             | Description                                                 |
+|-----------------|-------------------------------------------------------------|
+| `praum-monitor` | Reads sensors and provides an api.                          |
+| `web-app`       | Electron web app using Chart.js to present the sensor data. |
+
 ## Readings
 
 MQ-4
@@ -95,8 +102,6 @@ python3 dev-server.py
 
 ## Installation
 
-
-
 ### Installation script ([script 📃](bin/install.sh))
 
 > Be careful using this scripts. Always check content before running a script with `sudo`.
@@ -104,8 +109,6 @@ python3 dev-server.py
 ```bash
 sudo /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/lukasdanckwerth/praum-monitor/main/bin/install.sh)"
 ```
-
-
 
 ### Update and install packages
 
@@ -120,8 +123,13 @@ Expand file system `"Advanced Options"` -> `"Expand Filesystem"` and activate SP
 
 ```bash
 sudo raspi-config
-```
 
+# or expand filesystem with
+sudo raspi-config --expand-rootfs
+
+# and enable spi interface
+sudo raspi-config nonint do_spi 0
+```
 
 ### Install samba
 
@@ -139,6 +147,7 @@ sudo chmod 777 /srv/praum-monitor
 See [smb.conf](assets/smb.config).
 
 ### Install py-spidev lib
+
 ```bash
 pushd /srv/
 wget https://github.com/doceme/py-spidev/archive/master.zip -O py-spidev.zip
@@ -164,13 +173,6 @@ xset -dpms
 xset q
 ```
 
-## Install Firefox
-
-```bash
-sudo apt update --assume-yes && \
-sudo apt install firefox-esr --assume-yes
-```
-
 ## Autostart Firefox
 
 Edit:
@@ -193,20 +195,25 @@ Comment the following line.
 @lxpanel --profile LXDE
 ```
 
+```bash
+@lxpanel --profile LXDE-pi 
+@pcmanfm --desktop --profile LXDE-pi 
+@xscreensaver -no-splash
+@unclutter -idle 0.1 -root 
+@bash /srv/praum-monitor/bin/start-web-app.sh
+#@firefox-esr --kiosk --private-window file:///home/pi/Desktop/index.html
+```
+
 ## Make the mouse disappear
 
-You can also add this line if you want the mouse to disappear:
-
-Install _unclutter_:
+To make the mouse disappear first install _unclutter_:
 
 ```bash
 sudo apt-get install unclutter
 ```
 
-Add the following line to your `/etc/xdg/lxsession/LXDE-pi/autostart` file.
+Then add the following line to your `/etc/xdg/lxsession/LXDE-pi/autostart` file.
 
 ```bash
 @unclutter -idle 0.1 -root
 ```
-
-
