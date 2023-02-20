@@ -1,5 +1,6 @@
 .idea/
-data/*
+data/**/
+data/*.txt
 ._*
 __pycache__
 .DS_Store
