@@ -8,27 +8,56 @@
     />
 </head>
 <body>
-<div class="container" style="max-width: 768px;">
+<!-- <div class="container" style="max-width: 768px;"> -->
+<div class="container">
     <div class="row mt-4">
         <div class="col-6">
             <h1>praum-monitor</h1>
         </div>
-        <div class="col-6">
+        <div class="col-3">
             <div id="start-time" style="float: right">START_DATE</div>
             <br/>
             <div id="time-elapsed" style="float: right">TIME_ELAPSED</div>
             <br/>
             <div id="loop-count" style="float: right">LOOP_COUNT</div>
         </div>
+        <div class="col-3">
+            <div style="float: right"><strong>Climate:</strong></div>
+            <br />
+            <div id="celsius" style="float: right">celsius</div>
+            <br />
+            <div id="humidity" style="float: right">humidity</div>
+        </div>
+
+        <div class="col-12">
+            <div id="alcohol" style="float: right">alcohol</div>
+            <br />
+            <div id="smoke" style="float: right">smoke</div>
+        </div>
     </div>
 
     <div class="row mt-4">
-        <div class="col-12">
-            <label> Gas </label>
-            <canvas id="gas-chart"></canvas>
+        <div class="col-12 mb-5" style="max-height: 400px;">
+            <label> GAS </label>
+            <canvas id="gas-chart" style="width: 100%;"></canvas>
         </div>
 
-        <div class="col-6 mt-4">
+        <div class="col-4" style="max-height: 400px;">
+            <label> SMOKE </label>
+            <canvas id="smoke-chart"></canvas>
+        </div>
+
+        <div class="col-4" style="max-height: 400px;">
+            <label> ALCOHOL </label>
+            <canvas id="alcohol-chart"></canvas>
+        </div>
+
+        <div class="col-4" style="max-height: 400px;">
+            <label> CH4 </label>
+            <canvas id="ch4-chart"></canvas>
+        </div>
+
+        <!-- <div class="col-6 mt-4">
             <label> Volume </label>
             <canvas id="volume-chart"></canvas>
         </div>
@@ -36,7 +65,7 @@
         <div class="col-6 mt-4">
             <label> Motion </label>
             <canvas id="motion-chart"></canvas>
-        </div>
+        </div> -->
     </div>
 </div>
 
@@ -45,20 +74,32 @@
 <script src="lib/chart.umd.min.js"></script>
 
 <script src="js/index.js"></script>
+<script src="js/alcohol-chart.js"></script>
+<script src="js/smoke-chart.js"></script>
+<script src="js/ch4-chart.js"></script>
 <script src="js/gas-chart.js"></script>
 <script src="js/motion-chart.js"></script>
 <script src="js/volume-chart.js"></script>
 
 <script type="text/javascript">
-    document.getElementById("start-time").innerText =
-        index.startTimeFormatted();
+    document.getElementById("start-time").innerText = index.startTimeFormatted();
 
     index.updateTimeElapsed();
     setInterval(index.updateTimeElapsed, 1000);
 
-    new Chart(document.getElementById("gas-chart"), gasChartConfig);
-    new Chart(document.getElementById("motion-chart"), motionChartConfig);
-    new Chart(document.getElementById("volume-chart"), volumeChartConfig);
+    // index.updateTimeElapsed();
+    // setInterval(index.loop, 2000);
+
+    index.loop();
+
+    index.gasChart = new Chart(document.getElementById("gas-chart"), gasChartConfig);
+
+    index.smokeChart = new Chart(document.getElementById("smoke-chart"), smokeChartConfig);
+    index.alcoholChart = new Chart(document.getElementById("alcohol-chart"), alcoholChartConfig);
+    index.ch4Chart = new Chart(document.getElementById("ch4-chart"), ch4ChartConfig);
+
+    // new Chart(document.getElementById("motion-chart"), motionChartConfig);
+    // new Chart(document.getElementById("volume-chart"), volumeChartConfig);
 </script>
 </body>
 </html>

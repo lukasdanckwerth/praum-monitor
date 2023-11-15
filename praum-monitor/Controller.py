@@ -7,6 +7,7 @@ from DataDirectory import DataDirectory
 from sensors.MQ4 import MQ4
 from sensors.MQ135 import MQ135
 from sensors.SoundSensor import SoundSensor
+from sensors.ClimateSensor import ClimateSensor
 from devices.TrafficLight import TrafficLight
 from sensors.MovementSensor import MovementSensor
 from devices.PiezoBuzzer import PiezoBuzzer
@@ -30,13 +31,13 @@ class Controller():
         self.mq4 = MQ4()
         self.mq135 = MQ135()
         self.soundSensor = SoundSensor()
+        self.climateSensor = ClimateSensor()
         self.movementSensor = MovementSensor()
 
         self.buzzer = PiezoBuzzer()
         self.buzzer.play_for()
 
         self.piezo = Piezo()
-        
         
         self.tll = TrafficLight(gpio_green=17, gpio_yellow=27, gpio_red=22)
         self.tlc = TrafficLight(gpio_green=16, gpio_yellow=20, gpio_red=21)
@@ -55,8 +56,7 @@ class Controller():
         perc4 = self.mq4.MQPercentage()
         perc135 = self.mq135.MQPercentage()
         movSig = self.movementSensor.read()
-
-        print(format_value(perc4["SMOKE"]))
+        climateSig = self.climateSensor.read()
 
         rec = {
             "LOOP": self.loop_count,
@@ -68,15 +68,21 @@ class Controller():
             "ALCOHOL": format_value(perc4["ALCOHOL"]),
             "CO": format_value(perc4["CO"]),
 
-            "ACETON": format_value(perc135["ACETON"]),
-            "TOLUENO": format_value(perc135["TOLUENO"]),
-            "ALCOHOL_2": format_value(perc135["ALCOHOL"]),
-            "CO2": format_value(perc135["CO2"]),
-            "NH4": format_value(perc135["NH4"]),
-            "CO_2": format_value(perc135["CO"]),
+            # "ACETON": format_value(perc135["ACETON"]),
+            # "TOLUENO": format_value(perc135["TOLUENO"]),
+            # "ALCOHOL_2": format_value(perc135["ALCOHOL"]),
+            # "CO2": format_value(perc135["CO2"]),
+            # "NH4": format_value(perc135["NH4"]),
+            # "CO_2": format_value(perc135["CO"]),
 
             "MOV": movSig,
+
+            "CELSIUS": format_value(climateSig["CELSIUS"] or 0),
+            "HUMIDITY": format_value(climateSig["HUMIDITY"] or 0),
         }
+        
+        print(rec)
+
         return rec
 
     def loop(self):

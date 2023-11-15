@@ -6,7 +6,7 @@ from datetime import datetime, date
 from pathlib import Path
 
 HEADER = ["LOOP", "CH4", "LPG", "H2", "SMOKE", "ALCOHOL", "CO", "ACETON", "TOLUENO", "ALCOHOL_2", "CO2", "NH4", "CO_2",
-          "VOL", "MOV"]
+          "VOL", "MOV", "CELSIUS", "HUMIDITY"]
 
 
 def is_dir(path):

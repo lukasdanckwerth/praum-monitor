@@ -1,66 +1,41 @@
 const gasChartConfig = {
-  type: "line",
+  type: "bar",
   data: {
-    labels: [1, 2, 3, 4, 5, 6, 7],
+    labels: [],
     datasets: [
       {
         label: "CH4",
-        data: [65, 59, 80, 81, 56, 55, 40].map((item) => Math.random() * 100),
+        data: [],
         tension: 0.1,
-      },
-      {
-        label: "LPG",
-        data: [65, 59, 80, 81, 56, 55, 40],
-        // fill: false,
-        // borderColor: "rgb(75, 192, 192)",
-        tension: 0.1,
-      },
-      {
-        label: "H2",
-        data: [65, 59, 80, 81, 56, 55, 40].map((item) => Math.random() * 100),
-        tension: 0.1,
+        borderColor: "green",
+        backgroundColor: "green",
       },
       {
         label: "SMOKE",
-        data: [65, 59, 80, 81, 56, 55, 40].map((item) => Math.random() * 100),
+        data: [],
         tension: 0.1,
+        borderColor: "gray",
+        backgroundColor: "gray",
       },
       {
         label: "ALCOHOL",
-        data: [65, 59, 80, 81, 56, 55, 40].map((item) => Math.random() * 100),
+        data: [],
         tension: 0.1,
-      },
-      {
-        label: "CO",
-        data: [65, 59, 80, 81, 56, 55, 40].map((item) => Math.random() * 100),
-        tension: 0.1,
-      },
-      {
-        label: "ACETON",
-        data: [65, 59, 80, 81, 56, 55, 40].map((item) => Math.random() * 100),
-        tension: 0.1,
-      },
-      {
-        label: "TOLUENO",
-        data: [65, 59, 80, 81, 56, 55, 40].map((item) => Math.random() * 100),
-        tension: 0.1,
-      },
-      {
-        label: "CO2",
-        data: [65, 59, 80, 81, 56, 55, 40].map((item) => Math.random() * 100),
-        tension: 0.1,
-      },
-      {
-        label: "NH4",
-        data: [65, 59, 80, 81, 56, 55, 40].map((item) => Math.random() * 100),
-        tension: 0.1,
+        borderColor: "yellow",
+        backgroundColor: "yellow",
       },
     ],
   },
   options: {
+    responsive: true,
     scales: {
+      x: {
+        stacked: true,
+      },
       y: {
+        stacked: true,
         beginAtZero: true,
+        type: "logarithmic",
       },
     },
   },
