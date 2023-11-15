@@ -41,7 +41,7 @@ class MQ4():
         mcp = MCP.MCP3008(spi, cs)
 
         # create an analog input channel on pin 2 for MQ4
-        self.chan_MQ4 = AnalogIn(mcp, MCP.P0)
+        self.chan_MQ4 = AnalogIn(mcp, MCP.P7)
         
         self.CH4Curve = [2.3,0.24,-0.35]    # two points are taken from the curve. 
                                             # with these two points, a line is formed which is "approximately equivalent"

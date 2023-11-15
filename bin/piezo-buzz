@@ -1,0 +1,83 @@
+#!/usr/bin/python3
+
+import RPi.GPIO as GPIO
+from time import sleep
+
+FREQ_C0 = 16.35
+FREQ_C4 = 261.63
+FREQ_D4 = 293.66
+FREQ_E4 = 329.63
+FREQ_F4 = 349.23
+FREQ_G4 = 392.00
+FREQ_A4 = 440.00
+FREQ_H4 = 493.88
+FREQ_A5 = 523.25
+
+if __name__ == '__main__':
+    gpio_no = 5
+    duration = 3
+
+    # GPIO.setwarnings(False)
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(gpio_no, GPIO.OUT)
+
+    GPIO.output(gpio_no, GPIO.HIGH)
+    
+    pin7 = GPIO.PWM(gpio_no, 100)
+    pin7.start(50)
+    pin7.ChangeFrequency(FREQ_C4)
+
+    sleep(1)
+    GPIO.output(gpio_no, GPIO.LOW)
+    pin7.stop()
+
+    sleep(1)
+    GPIO.output(gpio_no, GPIO.HIGH)
+    pin7.start(50)
+    pin7.ChangeFrequency(FREQ_G4)
+
+    sleep(1)
+    GPIO.output(gpio_no, GPIO.LOW)
+    pin7.stop()
+
+    GPIO.cleanup()
+
+    exit(1)
+
+    # pin7 = GPIO.PWM(gpio_no, 100)
+    # pin7.start(50)
+
+    GPIO.output(gpio_no, GPIO.HIGH)
+    pin7.ChangeFrequency(16.35)  # C0
+    sleep(1)
+    pin7.ChangeFrequency(261.63)  # C4
+    sleep(1)
+    pin7.ChangeFrequency(293.66)  # D4
+    sleep(1)
+    pin7.ChangeFrequency(329.63)  # E4
+    sleep(1)
+    pin7.ChangeFrequency(349.23)  # F4
+    sleep(1)
+    pin7.ChangeFrequency(392.00)  # G4
+    sleep(1)
+    pin7.ChangeFrequency(440.00)  # A4
+    sleep(1)
+    pin7.ChangeFrequency(493.88)  # B4
+    sleep(1)
+    pin7.ChangeFrequency(523.25)  # A5
+    sleep(1.5)
+    pin7.ChangeFrequency(16.35)  # C0
+    sleep(1)
+    GPIO.output(gpio_no, GPIO.LOW)
+    sleep(1)
+    GPIO.cleanup()
+       
+
+    # GPIO.output(gpio_no, GPIO.HIGH)
+    # time.sleep(duration)
+    # GPIO.output(gpio_no, GPIO.LOW)
+    # GPIO.cleanup()
+
+# The frequencies in this code was based on the note frequencies found at:
+# https://pages.mtu.edu/~suits/notefreqs.html
+# Tuned at A4 = 440Hz.

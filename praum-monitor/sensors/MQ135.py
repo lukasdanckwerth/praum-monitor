@@ -41,7 +41,7 @@ class MQ135():
         mcp = MCP.MCP3008(spi, cs)
 
         # create an analog input channel on pin 1 for MQ135
-        self.chan_MQ135 = AnalogIn(mcp, MCP.P1)
+        self.chan_MQ135 = AnalogIn(mcp, MCP.P5)
         
         self.ACETONCurve = [1.0,0.18,-0.32] # two points are taken from the curve. 
                                             # with these two points, a line is formed which is "approximately equivalent"

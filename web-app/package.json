@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "main": "public/main.js",
     "scripts": {
-        "start": "node_modules/.bin/electron .."
+        "start": "node_modules/.bin/electron ."
     },
     "devDependencies": {
         "child_process": "^1.0.2",

@@ -2,7 +2,7 @@
 set -u
 set -e
 
-PROJ_PATH="/srv/praum-monitor"
+PROJ_PATH="/srv/praum-monitor/web-app"
 
 if [[ ! -d "${PROJ_PATH}" ]]; then
   echo "Missing project at ${PROJ_PATH}"
