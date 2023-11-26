@@ -17,7 +17,6 @@ const alcoholChartConfig = {
     scales: {
       y: {
         beginAtZero: true,
-        type: "logarithmic",
       },
     },
   },

@@ -17,7 +17,6 @@ const smokeChartConfig = {
     scales: {
       y: {
         beginAtZero: true,
-        type: "logarithmic",
       },
     },
   },

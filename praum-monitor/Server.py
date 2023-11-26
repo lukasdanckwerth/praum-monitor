@@ -3,6 +3,7 @@ from http import HTTPStatus
 from threading import Thread
 import json
 import csv
+import os.path
 
 
 class _RequestHandler(BaseHTTPRequestHandler):
@@ -13,12 +14,21 @@ class _RequestHandler(BaseHTTPRequestHandler):
         self.end_headers()
 
     def do_GET(self):
+
+        the_path = "/srv/praum-monitor/data/current_record.json"
+
         data = {
             "some": 12
         }
-        with open("data/current_record.json", "r") as session_file:
-            data = json.load(session_file)
-            session_file.close()
+
+        try:
+            if os.path.isfile(the_path):
+                with open(the_path, "r") as session_file:
+                    data = json.load(session_file)
+                    session_file.close()
+
+        except Exception as e:
+            print("Error: " + str(e))
 
         self._set_headers()
         self.wfile.write(json.dumps(data).encode('utf-8'))

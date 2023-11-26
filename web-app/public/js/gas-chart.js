@@ -4,11 +4,11 @@ const gasChartConfig = {
     labels: [],
     datasets: [
       {
-        label: "CH4",
+        label: "ALCOHOL",
         data: [],
         tension: 0.1,
-        borderColor: "green",
-        backgroundColor: "green",
+        borderColor: "yellow",
+        backgroundColor: "yellow",
       },
       {
         label: "SMOKE",
@@ -18,11 +18,11 @@ const gasChartConfig = {
         backgroundColor: "gray",
       },
       {
-        label: "ALCOHOL",
+        label: "CH4",
         data: [],
         tension: 0.1,
-        borderColor: "yellow",
-        backgroundColor: "yellow",
+        borderColor: "green",
+        backgroundColor: "green",
       },
     ],
   },

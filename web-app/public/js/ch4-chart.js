@@ -17,7 +17,6 @@ const ch4ChartConfig = {
     scales: {
       y: {
         beginAtZero: true,
-        type: "logarithmic",
       },
     },
   },

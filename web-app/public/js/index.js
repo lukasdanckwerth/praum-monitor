@@ -53,9 +53,9 @@ let index = {
         const labels = [...Array(index.loopCount).keys()].map((num) => num + 1);
 
         index.gasChart.data.labels = labels;
-        index.gasChart.data.datasets[0].data.push(Number(record.CH4));
+        index.gasChart.data.datasets[2].data.push(Number(record.CH4));
         index.gasChart.data.datasets[1].data.push(Number(record.SMOKE));
-        index.gasChart.data.datasets[2].data.push(Number(record.ALCOHOL));
+        index.gasChart.data.datasets[0].data.push(Number(record.ALCOHOL));
         index.gasChart.update();
 
         index.smokeChart.data.labels = labels;

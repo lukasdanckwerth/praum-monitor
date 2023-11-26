@@ -27,7 +27,7 @@ class Controller():
         GPIO.setwarnings(False)
         GPIO.setmode(GPIO.BCM)
 
-        self.data_directory = DataDirectory("data")
+        self.data_directory = DataDirectory("/srv/praum-monitor/data")
         self.mq4 = MQ4()
         self.mq135 = MQ135()
         self.soundSensor = SoundSensor()
