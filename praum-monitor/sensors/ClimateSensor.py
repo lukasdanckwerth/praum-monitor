@@ -12,24 +12,25 @@ class ClimateSensor():
 
     def read(self):
 
-        val = {}
-        # val["CELSIUS"] = self.temperature_c
-        # val["HUMIDITY"] = self.humidity
-
-        val["CELSIUS"] = 0
-        val["HUMIDITY"] = 0
-
         try:
-            self.temperature_c = self.dhtDevice.temperature
-            self.humidity = self.dhtDevice.humidity
+            temp_temperature = self.dhtDevice.temperature
+            temp_humidity = self.dhtDevice.humidity
 
-            val["CELSIUS"] = self.temperature_c
-            val["HUMIDITY"] = self.humidity
+            if temp_temperature != 0:
+                self.temperature_c = self.dhtDevice.temperature
+
+            if temp_humidity != 0:
+                self.humidity = self.dhtDevice.humidity
  
         except RuntimeError as error:
             print(error.args[0])
 
         except Exception as error:
             print(error.args[0])
+
+        val = {
+            "CELSIUS": self.temperature_c,
+            "HUMIDITY": self.humidity
+        }
 
         return val

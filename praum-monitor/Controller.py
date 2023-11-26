@@ -18,7 +18,7 @@ MQ135_GASES = ["ACETON", "TOLUENO", "ALCOHOL", "CO2", "NH4", "CO"]
 
 
 def format_value(val):
-    return "{:.16f}".format(val)
+    return "{:.12f}".format(val)
 
 
 class Controller():
@@ -35,15 +35,15 @@ class Controller():
         self.movementSensor = MovementSensor()
 
         self.buzzer = PiezoBuzzer()
-        self.buzzer.play_for()
+        self.buzzer.play_for(0.3)
 
         self.piezo = Piezo()
+        self.piezo.melodey()
         
         self.tll = TrafficLight(gpio_green=17, gpio_yellow=27, gpio_red=22)
         self.tlc = TrafficLight(gpio_green=16, gpio_yellow=20, gpio_red=21)
         self.tlr = TrafficLight(gpio_green=26, gpio_yellow=19, gpio_red=13)
 
-        self.piezo.melodey()
         self.tll.turn_on()
         self.tlc.turn_on()
         self.tlr.turn_on()
@@ -78,7 +78,7 @@ class Controller():
             "MOV": movSig,
 
             "CELSIUS": format_value(climateSig["CELSIUS"] or 0),
-            "HUMIDITY": format_value(climateSig["HUMIDITY"] or 0),
+            "HUMIDITY": format_value(climateSig["HUMIDITY"] or 0)
         }
         
         print(rec)

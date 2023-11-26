@@ -3,6 +3,10 @@
 import RPi.GPIO as GPIO
 from time import sleep
 
+# The frequencies in this code was based on the note frequencies found at:
+# https://pages.mtu.edu/~suits/notefreqs.html
+# Tuned at A4 = 440Hz.
+
 FREQ_C0 = 16.35
 FREQ_C4 = 261.63
 FREQ_D4 = 293.66
@@ -78,6 +82,4 @@ if __name__ == '__main__':
     # GPIO.output(gpio_no, GPIO.LOW)
     # GPIO.cleanup()
 
-# The frequencies in this code was based on the note frequencies found at:
-# https://pages.mtu.edu/~suits/notefreqs.html
-# Tuned at A4 = 440Hz.
+
