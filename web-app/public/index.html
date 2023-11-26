@@ -1,110 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8"/>
+  <head>
+    <meta charset="UTF-8" />
     <link
-            rel="stylesheet"
-            href="lib/bootstrap-5.3.0-alpha1-dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      href="lib/bootstrap-5.3.0-alpha1-dist/css/bootstrap.min.css"
     />
     <style>
-        .container {
-            background-color: blueviolet;
-        }
+      body {
+        background-color: gray;
+      }
+      .app {
+        background-color: white;
+        width: 1366px;
+        height: 768px;
+        margin: 0 auto;
+        padding: 1em;
+        overflow: hidden;
+      }
     </style>
-</head>
-<body>
-<!-- <div class="container" style="max-width: 768px;"> -->
-<div class="container">
-    <div class="row mt-4">
-        <div class="col-6">
-            <h1>praum-monitor</h1>
+  </head>
+  <body>
+    <!-- <div class="container" style="max-width: 768px;"> -->
+    <div class="app">
+      <div class="row">
+        <div class="col-4">
+          <h1>praum-monitor</h1>
         </div>
-        <div class="col-3">
-            <div id="start-time" style="float: right">START_DATE</div>
-            <br/>
-            <div id="time-elapsed" style="float: right">TIME_ELAPSED</div>
-            <br/>
-            <div id="loop-count" style="float: right">LOOP_COUNT</div>
-        </div>
-        <div class="col-3">
-            <div style="float: right"><strong>Climate:</strong></div>
-            <br />
-            <div id="celsius" style="float: right">celsius</div>
-            <br />
-            <div id="humidity" style="float: right">humidity</div>
-        </div>
+        <div class="col-4">
+          <div>
+            <strong>Climate:</strong>
 
+            <label style="text-align: right; float: right">
+              <strong id="celsius">-</strong> °C
+            </label>
+            <br />
+            <label style="float: right">
+              <strong id="humidity">-</strong> % r.F.
+            </label>
+          </div>
+        </div>
+        <div class="col-4" style="text-align: right">
+          <div><span id="start-time">0</span></div>
+          <div>Uptime: <strong id="time-elapsed">0</strong></div>
+          <div>Loop: <strong id="loop-count">0</strong></div>
+        </div>
+      </div>
+
+      <div class="row mt-1">
+        <div class="col-12" style="height: 540px; width: 100vw">
+          <canvas id="gas-chart"></canvas>
+        </div>
+      </div>
+
+      <div class="row mt-4">
         <div class="col-12">
-            <div id="alcohol" style="float: right">alcohol</div>
-            <br />
-            <div id="smoke" style="float: right">smoke</div>
+          <div class="alert alert-warning" role="alert" style="display: none">
+            A simple primary alert—check it out!
+          </div>
         </div>
+      </div>
     </div>
 
-    <div class="row mt-4">
-        <div class="col-12 mb-5" style="max-height: 400px;">
-            <label> GAS </label>
-            <canvas id="gas-chart" style="width: 100%;"></canvas>
-        </div>
+    <script src="lib/bootstrap-5.3.0-alpha1-dist/js/bootstrap.min.js"></script>
+    <script src="lib/chart.umd.min.js"></script>
 
-        <div class="col-4" style="max-height: 400px;">
-            <label> SMOKE </label>
-            <canvas id="smoke-chart"></canvas>
-        </div>
+    <script src="js/index.js"></script>
+    <script src="js/alcohol-chart.js"></script>
+    <script src="js/smoke-chart.js"></script>
+    <script src="js/ch4-chart.js"></script>
+    <script src="js/gas-chart.js"></script>
+    <script src="js/movement-chart.js"></script>
+    <script src="js/temperature-chart.js"></script>
 
-        <div class="col-4" style="max-height: 400px;">
-            <label> ALCOHOL </label>
-            <canvas id="alcohol-chart"></canvas>
-        </div>
+    <script type="text/javascript">
+      index.updateElement("start-time", index.startTimeFormatted());
 
-        <div class="col-4" style="max-height: 400px;">
-            <label> CH4 </label>
-            <canvas id="ch4-chart"></canvas>
-        </div>
+      index.updateTimeElapsed();
+      setInterval(index.updateTimeElapsed, 1000);
 
-        <!-- <div class="col-6 mt-4">
-            <label> Volume </label>
-            <canvas id="volume-chart"></canvas>
-        </div>
+      index.loop();
 
-        <div class="col-6 mt-4">
-            <label> Motion </label>
-            <canvas id="motion-chart"></canvas>
-        </div> -->
-    </div>
-</div>
+      function createChart(name, elementId, config) {
+        index[name] = new Chart(document.getElementById(elementId), config);
+      }
 
+      createChart("gasChart", "gas-chart", gasChartConfig);
 
-<script src="lib/bootstrap-5.3.0-alpha1-dist/js/bootstrap.min.js"></script>
-<script src="lib/chart.umd.min.js"></script>
+      // createChart("movementChart", "movement-chart", movementChartConfig);
+      // createChart(
+      //   "temperatureChart",
+      //   "temperature-chart",
+      //   temperatureChartConfig
+      // );
 
-<script src="js/index.js"></script>
-<script src="js/alcohol-chart.js"></script>
-<script src="js/smoke-chart.js"></script>
-<script src="js/ch4-chart.js"></script>
-<script src="js/gas-chart.js"></script>
-<script src="js/motion-chart.js"></script>
-<script src="js/volume-chart.js"></script>
-
-<script type="text/javascript">
-    document.getElementById("start-time").innerText = index.startTimeFormatted();
-
-    index.updateTimeElapsed();
-    setInterval(index.updateTimeElapsed, 1000);
-
-    // index.updateTimeElapsed();
-    // setInterval(index.loop, 2000);
-
-    index.loop();
-
-    index.gasChart = new Chart(document.getElementById("gas-chart"), gasChartConfig);
-
-    index.smokeChart = new Chart(document.getElementById("smoke-chart"), smokeChartConfig);
-    index.alcoholChart = new Chart(document.getElementById("alcohol-chart"), alcoholChartConfig);
-    index.ch4Chart = new Chart(document.getElementById("ch4-chart"), ch4ChartConfig);
-
-    // new Chart(document.getElementById("motion-chart"), motionChartConfig);
-    // new Chart(document.getElementById("volume-chart"), volumeChartConfig);
-</script>
-</body>
+      // createChart("smokeChart", "smoke-chart", smokeChartConfig);
+      // createChart("alcoholChart", "alcohol-chart", alcoholChartConfig);
+      // createChart("ch4Chart", "ch4-chart", ch4ChartConfig);
+    </script>
+  </body>
 </html>
