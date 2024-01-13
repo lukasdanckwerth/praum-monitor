@@ -14,7 +14,7 @@ if __name__ == '__main__':
         print("Controller will loop forever\n")
         while True:
             controller.loop()
-            sleep(1)  # avoid overloading cpu
+            sleep(1/20)  # avoid overloading cpu
             print("loop_count: " + str(controller.loop_count), end="\r")
 
     except KeyboardInterrupt:

@@ -3,19 +3,22 @@
 <!-- TOC -->
 
 - [praum-monitor](#praum-monitor)
+  - [Project](#project)
   - [Readings](#readings)
   - [GPIOs](#gpios)
     - [Connecting RaspberryPi and MCP3008](#connecting-raspberrypi-and-mcp3008)
     - [GPIO distribution](#gpio-distribution)
-  - [Operations](#operations)
+  - [Development](#development)
+    - [dev-server](#dev-server)
+  - [Installation](#installation)
+    - [Installation script (script 📃)](#installation-script-script-)
+    - [Update and install packages](#update-and-install-packages)
     - [Install samba](#install-samba)
+    - [Install py-spidev lib](#install-py-spidev-lib)
   - [Disable display sleep](#disable-display-sleep)
-  - [Install Firefox](#install-firefox)
   - [Autostart Firefox](#autostart-firefox)
   - [Hide taskbar / menubar](#hide-taskbar--menubar)
   - [Make the mouse disappear](#make-the-mouse-disappear)
-  - [Development](#development)
-    - [dev-server](#dev-server)
 
 <!-- TOC -->
 
@@ -76,6 +79,7 @@ Motion Sensor
 |                  | CH5              | MQ-135 (AO)             |
 |                  | CH7              | MQ-4 (AO)               |
 |                  | CH3              | Sound Sensor V2 (A0)    |
+| Pin 12 / GPIO 18 |                  | Sound Sensor V2 (D0)    |
 | Pin 4 / 5V       |                  | Sound Sensor V2 VCC     |
 | Pin 34           |                  | Sound Sensor V2 GND     |
 |                  |                  |                         |

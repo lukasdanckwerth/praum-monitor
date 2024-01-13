@@ -57,6 +57,7 @@ class Controller():
         perc135 = self.mq135.MQPercentage()
         movSig = self.movementSensor.read()
         climateSig = self.climateSensor.read()
+        soundSig = self.soundSensor.read()
 
         rec = {
             "LOOP": self.loop_count,
@@ -76,12 +77,13 @@ class Controller():
             # "CO_2": format_value(perc135["CO"]),
 
             "MOV": movSig,
+            "SOUND": soundSig,
 
             "CELSIUS": format_value(climateSig["CELSIUS"] or 0),
             "HUMIDITY": format_value(climateSig["HUMIDITY"] or 0)
         }
         
-        print(rec)
+        # print("soundSig: " + str(soundSig))
 
         return rec
 
