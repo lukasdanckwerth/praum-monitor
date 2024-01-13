@@ -40,6 +40,7 @@ class Controller():
         self.loop_count = 0
         self.rec = False
         self.records = []
+        self.before_start()
 
     def before_start(self):
         self.buzzer.play_for(0.3)
@@ -53,9 +54,7 @@ class Controller():
         movSig = self.movementSensor.read()
         climateSig = self.climateSensor.read()
         soundSig = self.soundSensor.read()
-        mh_z19Sig = mh_z19.read_all()
-
-        print(mh_z19.read_all())
+        mh_z19Sig = mh_z19.read_from_pwm(gpio=25)
 
         rec = {
             "LOOP": self.loop_count,
@@ -64,8 +63,9 @@ class Controller():
             "CELSIUS": format_value(climateSig["CELSIUS"] or 0),
             "HUMIDITY": format_value(climateSig["HUMIDITY"] or 0),
             "CO2": mh_z19Sig["co2"] or 0,
-            "CELSIUS_2": mh_z19Sig["temperature"] or 0,
         }
+
+        print(rec)
 
         return rec
 
