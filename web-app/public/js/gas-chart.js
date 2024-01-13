@@ -1,32 +1,21 @@
+const lineWidth = 6;
+const alphaHex = "77";
+const alphaHexPoints = "77";
+
 const gasChartConfig = {
   type: "bar",
   data: {
     labels: [],
     datasets: [
       {
-        label: "Alcohol",
+        label: "CO2",
         data: [],
         tension: 0.1,
-        borderColor: "#0d6efd",
-        backgroundColor: "#0d6efd",
-        yAxisID: "y",
-        order: 2,
-      },
-      {
-        label: "Smoke",
-        data: [],
-        tension: 0.1,
-        borderColor: "#6c757d",
-        backgroundColor: "#6c757d",
-        yAxisID: "y",
-        order: 2,
-      },
-      {
-        label: "CH4",
-        data: [],
-        tension: 0.1,
-        borderColor: "#198754",
-        backgroundColor: "#198754",
+        borderColor: "#99999999",
+        borderWidth: 2,
+        borderRadius: 5,
+        borderSkipped: false,
+        backgroundColor: "#99999966",
         yAxisID: "y",
         order: 2,
       },
@@ -35,8 +24,9 @@ const gasChartConfig = {
         type: "line",
         data: [],
         tension: 0.3,
-        borderColor: "#dc3545",
-        backgroundColor: "#dc3545",
+        borderColor: "#6610f2" + alphaHex,
+        borderWidth: lineWidth,
+        backgroundColor: "#6610f2" + alphaHexPoints,
         yAxisID: "yMovement",
         order: 1,
       },
@@ -45,9 +35,21 @@ const gasChartConfig = {
         type: "line",
         data: [],
         tension: 0.3,
-        borderColor: "#fd7e14",
-        backgroundColor: "#fd7e14",
+        borderColor: "#dc3545" + alphaHex,
+        borderWidth: lineWidth,
+        backgroundColor: "#dc3545" + alphaHexPoints,
         yAxisID: "yTemperature",
+        order: 0,
+      },
+      {
+        label: "Sound",
+        type: "line",
+        data: [],
+        tension: 0.3,
+        borderColor: "#435Ba8" + alphaHex,
+        borderWidth: lineWidth,
+        backgroundColor: "#435Ba8" + alphaHexPoints,
+        yAxisID: "ySound",
         order: 0,
       },
     ],
@@ -65,10 +67,10 @@ const gasChartConfig = {
       y: {
         stacked: true,
         beginAtZero: true,
-        type: "logarithmic",
+        // type: "logarithmic",
 
         afterFit(scale) {
-          scale.width = 90;
+          scale.width = 44;
         },
       },
       yMovement: {
@@ -86,8 +88,18 @@ const gasChartConfig = {
         min: 15,
         max: 25,
         position: "right",
-        afterFit(scale) {
-          scale.width = 90;
+        // afterFit(scale) {
+        //   scale.width = 90;
+        // },
+      },
+
+      ySound: {
+        display: false,
+        stacked: false,
+        min: 0,
+        max: 1.2,
+        ticks: {
+          display: false,
         },
       },
     },

@@ -7,6 +7,14 @@ let index = {
   loopTimer: null,
   loopCount: 0,
 
+  averages: {
+    co2: 0,
+    mov: 0,
+    sound: 0,
+    celsius: 0,
+    humidity: 0,
+  },
+
   startTimeFormatted() {
     return [
       new Date().toLocaleDateString("de-DE", {
@@ -36,14 +44,22 @@ let index = {
   },
 
   updateElement(elementId, value) {
-    document.getElementById(elementId).innerText = value;
+    const el = document.getElementById(elementId);
+    if (el) {
+      el.innerText = value;
+    }
   },
 
   loop() {
+    console.log("averages", index.averages);
+
     index.loopCount += 1;
     index.loopTimer = setTimeout(index.loop, index.loopDelay);
 
     index.updateElement("loop-count", index.loopCount);
+
+    const tempMin = 15;
+    const tempMax = 25;
 
     fetch(index.apiUrl)
       .then((data) => data.json())
@@ -56,35 +72,68 @@ let index = {
         const labels = [...Array(index.loopCount).keys()].map((num) => num + 1);
 
         index.gasChart.data.labels = labels;
-        index.gasChart.data.datasets[2].data.push(Number(record.SOUND));
-        // index.gasChart.data.datasets[2].data.push(Number(record.CH4));
-        // index.gasChart.data.datasets[1].data.push(Number(record.SMOKE));
-        // index.gasChart.data.datasets[0].data.push(Number(record.ALCOHOL));
-        index.gasChart.data.datasets[3].data.push(Number(record.MOV));
-        index.gasChart.data.datasets[4].data.push(Number(record.CELSIUS));
+        index.gasChart.data.datasets[0].data.push(Number(record.CO2) / 2);
+        index.gasChart.data.datasets[1].data.push(Number(record.MOV));
+        index.gasChart.data.datasets[2].data.push(Number(record.CELSIUS));
+        index.gasChart.data.datasets[3].data.push(Number(record.SOUND));
         index.gasChart.update();
 
-        // index.movementChart.data.labels = labels;
-        // index.movementChart.data.datasets[0].data.push(Number(record.MOV));
-        // index.movementChart.update();
+        const co2Gauge = Number(record.CO2 || 0) / 3000;
+        gaugeChart.animateTo(co2Gauge);
 
-        // index.temperatureChart.data.labels = labels;
-        // index.temperatureChart.data.datasets[0].data.push(
-        //   Number(record.CELSIUS)
-        // );
-        // index.temperatureChart.update();
+        var temperatureGauge =
+          (Number(record.CELSIUS || 0) - tempMin) / (tempMax - tempMin);
+        temperatureGauge = Math.max(temperatureGauge, 0);
+        // temperatureGauge = Math.min(temperatureGauge, tempMax);
+        temperatureGaugeChart.animateTo(temperatureGauge);
 
-        // index.smokeChart.data.labels = labels;
-        // index.smokeChart.data.datasets[0].data.push(Number(record.SMOKE));
-        // index.smokeChart.update();
+        const percentage = {
+          co2: co2Gauge,
+          mov: Number(record.MOV),
+          sound: Number(record.SOUND),
+          temperature: temperatureGauge,
+          humidity: Number(record.HUMIDITY) / 100,
+        };
 
-        // index.alcoholChart.data.labels = labels;
-        // index.alcoholChart.data.datasets[0].data.push(Number(record.ALCOHOL));
-        // index.alcoholChart.update();
+        function calcAverage(old, curr) {
+          if (old === 0 || !old || index.loopCount == 0) {
+            return curr;
+          }
 
-        // index.ch4Chart.data.labels = labels;
-        // index.ch4Chart.data.datasets[0].data.push(Number(record.CH4));
-        // index.ch4Chart.update();
+          const oldVal = ((index.loopCount - 1) / index.loopCount) * old;
+          const newVal = (1 / index.loopCount) * curr;
+
+          return oldVal + newVal;
+        }
+
+        index.averages.co2 = calcAverage(index.averages.co2, percentage.co2);
+        index.averages.mov = calcAverage(index.averages.mov, percentage.mov);
+        index.averages.sound = calcAverage(
+          index.averages.sound,
+          percentage.sound
+        );
+        index.averages.temperature = calcAverage(
+          index.averages.temperature,
+          percentage.temperature
+        );
+        index.averages.humidity = calcAverage(
+          index.averages.humidity,
+          percentage.humidity
+        );
+
+        console.log("loop", index.loopCount);
+        console.log("percentage", percentage);
+        console.log("averages", index.averages);
+
+        index.radar.data.datasets[0].data = [
+          index.averages.co2,
+          index.averages.mov,
+          index.averages.sound,
+          index.averages.temperature,
+          index.averages.humidity,
+        ];
+
+        index.radar.update();
       });
   },
 };

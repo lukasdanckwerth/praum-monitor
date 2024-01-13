@@ -18,19 +18,82 @@
         padding: 1em;
         overflow: hidden;
       }
+
+      body {
+        text-align: center;
+        margin-top: 3rem;
+      }
+
+      .c-chart-gauge__needle-base,
+      .c-chart-gauge__needle {
+        fill: #555555;
+      }
+
+      .c-chart-gauge__gradient-stop1 {
+        stop-color: MediumSeaGreen;
+      }
+
+      .c-chart-gauge__gradient-stop2 {
+        stop-color: orange;
+      }
+
+      .c-chart-gauge__gradient-stop3 {
+        stop-color: orange;
+      }
+
+      .c-chart-gauge__gradient-stop4 {
+        stop-color: dimgray;
+      }
+
+      .c-chart-temperature__gradient-stop1 {
+        stop-color: DodgerBlue;
+      }
+
+      .c-chart-temperature__gradient-stop2 {
+        stop-color: orange;
+      }
+
+      .c-chart-temperature__gradient-stop3 {
+        stop-color: orange;
+      }
+
+      .c-chart-temperature__gradient-stop4 {
+        stop-color: crimson;
+      }
     </style>
   </head>
   <body>
     <!-- <div class="container" style="max-width: 768px;"> -->
     <div class="app">
       <div class="row">
-        <div class="col-4">
-          <h1>praum-monitor</h1>
+        <div class="col">
+          <span style="font-size: 30px">praum-monitor</span>
         </div>
-        <div class="col-4">
-          <div>
-            <strong>Climate:</strong>
+      </div>
 
+      <div class="row">
+        <div class="col-4 text-center">
+          <div class="chart-gauge"></div>
+          <div style="font-size: 30px; margin-top: -10px">Co2</div>
+        </div>
+        <div class="col-3">
+          <div class="temperature-gauge"></div>
+          <div style="font-size: 30px; margin-top: -10px">Temparature</div>
+        </div>
+        <div
+          class="col-3"
+          style="height: 260px; margin-top: -30px; padding-left: 50px"
+        >
+          <canvas id="radar" class="mx-auto"></canvas>
+        </div>
+
+        <div class="col-2" style="text-align: right">
+          <div><span id="start-time">0</span></div>
+          <br />
+          <div>Uptime: <strong id="time-elapsed">0</strong></div>
+          <div>Loop: <strong id="loop-count">0</strong></div>
+          <br />
+          <div>
             <label style="text-align: right; float: right">
               <strong id="celsius">-</strong> °C
             </label>
@@ -40,23 +103,18 @@
             </label>
           </div>
         </div>
-        <div class="col-4" style="text-align: right">
-          <div><span id="start-time">0</span></div>
-          <div>Uptime: <strong id="time-elapsed">0</strong></div>
-          <div>Loop: <strong id="loop-count">0</strong></div>
-        </div>
       </div>
 
-      <div class="row mt-1">
-        <div class="col-12" style="height: 540px; width: 100vw">
+      <div class="row mt-0">
+        <div class="col-12" style="height: 440px; width: 100vw">
           <canvas id="gas-chart"></canvas>
         </div>
       </div>
 
       <div class="row mt-4">
         <div class="col-12">
-          <div class="alert alert-warning" role="alert" style="display: none">
-            A simple primary alert—check it out!
+          <div class="alert alert-danger" role="alert" style="display: display">
+            All okay!
           </div>
         </div>
       </div>
@@ -64,14 +122,13 @@
 
     <script src="lib/bootstrap-5.3.0-alpha1-dist/js/bootstrap.min.js"></script>
     <script src="lib/chart.umd.min.js"></script>
+    <script src="lib/d3.min.js"></script>
 
     <script src="js/index.js"></script>
-    <script src="js/alcohol-chart.js"></script>
-    <script src="js/smoke-chart.js"></script>
-    <script src="js/ch4-chart.js"></script>
+
     <script src="js/gas-chart.js"></script>
-    <script src="js/movement-chart.js"></script>
-    <script src="js/temperature-chart.js"></script>
+    <script src="js/co2-gauge.js"></script>
+    <script src="js/temperature-gauge.js"></script>
 
     <script type="text/javascript">
       index.updateElement("start-time", index.startTimeFormatted());
@@ -87,16 +144,41 @@
 
       createChart("gasChart", "gas-chart", gasChartConfig);
 
-      // createChart("movementChart", "movement-chart", movementChartConfig);
-      // createChart(
-      //   "temperatureChart",
-      //   "temperature-chart",
-      //   temperatureChartConfig
-      // );
+      const labels = ["Co2", "Mov", "Sound", "Temperature", "Humidity"];
+      const config = {
+        type: "radar",
 
-      // createChart("smokeChart", "smoke-chart", smokeChartConfig);
-      // createChart("alcoholChart", "alcohol-chart", alcoholChartConfig);
-      // createChart("ch4Chart", "ch4-chart", ch4ChartConfig);
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: "Some",
+              data: [0, 0, 0, 0, 0],
+              borderColor: "#708090",
+              backgroundColor: "#70809044",
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              display: false,
+            },
+            title: {
+              display: false,
+            },
+          },
+          scales: {
+            r: {
+              min: 0,
+              max: 1,
+            },
+          },
+        },
+      };
+
+      createChart("radar", "radar", config);
     </script>
   </body>
 </html>
