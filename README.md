@@ -31,29 +31,6 @@
 
 ## Readings
 
-MQ-4
-
-- CH4 (Methan)
-- LPG (Liquefied Petroleum Gas)
-- H2 (Hydrogen)
-- SMOKE
-- ALCOHOL
-- CO (Carbon monoxide)
-
-MQ-135
-
-- ACETON
-- TOLUENO
-- ALCOHOL
-- CO2 (Carbon dioxide)
-- NH4 (Ammonium)
-- CO (Carbon monoxide)
-
-Sound Sensor
-Analoge werte von 0 1024.
-
-Motion Sensor
-
 ## GPIOs
 
 ![](doc/rpi-gpio.jpg)
@@ -66,43 +43,36 @@ Motion Sensor
 
 ### GPIO distribution
 
-| RaspberryPi Pin  | MCP3008 Pin      | Device                  |
-| ---------------- | ---------------- | ----------------------- |
-| Pin 1 (3.3V)     | Pin 16 (VDD)     |                         |
-| Pin 1 (3.3V)     | Pin 15 (VREF)    |                         |
-| Pin 6 (GND)      | Pin 14 (AGND)    |                         |
-| Pin 23 (SCLK)    | Pin 13 (CLK)     |                         |
-| Pin 21 (MISO)    | Pin 12 (DOUT)    |                         |
-| Pin 19 (MOSI)    | Pin 11 (DIN)     |                         |
-| Pin 24 (CE0)     | Pin 10 (CS/SHDN) |                         |
-| Pin 6 (GND)      | Pin 9 (DGND)     |                         |
-|                  | CH5              | MQ-135 (AO)             |
-|                  | CH7              | MQ-4 (AO)               |
-|                  | CH3              | Sound Sensor V2 (A0)    |
-| Pin 12 / GPIO 18 |                  | Sound Sensor V2 (D0)    |
-| Pin 4 / 5V       |                  | Sound Sensor V2 VCC     |
-| Pin 34           |                  | Sound Sensor V2 GND     |
-|                  |                  |                         |
-| Pin 11 / GPIO 17 |                  | traffic light l Green   |
-| Pin 13 / GPIO 27 |                  | traffic light l Yellow  |
-| Pin 15 / GPIO 22 |                  | traffic light l Red     |
-|                  |                  | traffic light l GND     |
-| Pin 36 / GPIO 16 |                  | traffic light c Green   |
-| Pin 38 / GPIO 20 |                  | traffic light c Yellow  |
-| Pin 40 / GPIO 21 |                  | traffic light c Red     |
-|                  |                  | traffic light c GND     |
-| Pin 37 / GPIO 26 |                  | traffic light r Green   |
-| Pin 35 / GPIO 19 |                  | traffic light r Yellow  |
-| Pin 33 / GPIO 13 |                  | traffic light r Red     |
-|                  |                  | traffic light r GND     |
-| Pin 29 / GPIO 5  |                  | Piezo SIG               |
-| Pin 31 / GPIO 6  |                  | Buzzer SIG              |
-| Pin 7 / GPIO 4   |                  | Movement Sen Out        |
-| Pin 39           |                  | Movement Sen GND        |
-| Pin 4            |                  | Movement Sen VCC (5V)   |
-| Pin 32 / GPIO 12 |                  | Climate Sensor Out      |
-| Pin 30           |                  | Climate Sensor GND      |
-| Pin 2            |                  | Climate Sensor VCC (5V) |
+| RaspberryPi Pin  | MCP3008 Pin | Device                   |
+| ---------------- | ----------- | ------------------------ |
+| Pin 12 / GPIO 18 |             | Sound Sensor V2 (D0)     |
+| Pin 4 / 5V       |             | Sound Sensor V2 VCC      |
+| Pin 34           |             | Sound Sensor V2 GND      |
+|                  |             |                          |
+| Pin 11 / GPIO 17 |             | traffic light l Green    |
+| Pin 13 / GPIO 27 |             | traffic light l Yellow   |
+| Pin 15 / GPIO 22 |             | traffic light l Red      |
+|                  |             | traffic light l GND      |
+| Pin 36 / GPIO 16 |             | traffic light c Green    |
+| Pin 38 / GPIO 20 |             | traffic light c Yellow   |
+| Pin 40 / GPIO 21 |             | traffic light c Red      |
+|                  |             | traffic light c GND      |
+| Pin 37 / GPIO 26 |             | traffic light r Green    |
+| Pin 35 / GPIO 19 |             | traffic light r Yellow   |
+| Pin 33 / GPIO 13 |             | traffic light r Red      |
+|                  |             | traffic light r GND      |
+| Pin 29 / GPIO 5  |             | Piezo SIG                |
+| Pin 31 / GPIO 6  |             | Buzzer SIG               |
+| Pin 7 / GPIO 4   |             | Movement Sen Out         |
+| Pin 39           |             | Movement Sen GND         |
+| Pin 4            |             | Movement Sen VCC (5V)    |
+| Pin 32 / GPIO 12 |             | Climate Sensor Out       |
+| Pin 30           |             | Climate Sensor GND       |
+| Pin 2            |             | Climate Sensor VCC (5V)  |
+| Pin              |             | MH-Z19 V+ (5V)           |
+| Pin              |             | MH-Z19 V- (GND)          |
+| Pin / GPIO       |             | MH-Z19 Rxd (Digital In)  |
+| Pin / GPIO       |             | MH-Z19 Txd (Digital Out) |
 
 ## Development
 
