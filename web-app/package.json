@@ -1,13 +1,16 @@
 {
   "name": "praum-monitor",
   "version": "0.1.0",
-  "main": "public/main.js",
+  "main": "public/index.html",
   "scripts": {
+    "dev": "live-server",
     "start": "node_modules/.bin/electron ."
   },
   "devDependencies": {
     "child_process": "^1.0.2",
     "electron": "^23.1.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "live-server": "1.2.1"
+  }
 }

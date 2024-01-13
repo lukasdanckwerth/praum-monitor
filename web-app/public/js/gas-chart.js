@@ -83,8 +83,8 @@ const gasChartConfig = {
 
       yTemperature: {
         stacked: false,
-        min: -10,
-        max: 50,
+        min: 15,
+        max: 25,
         position: "right",
         afterFit(scale) {
           scale.width = 90;

@@ -1,6 +1,6 @@
 let index = {
-  apiUrl: "http://localhost:1312",
-  // apiUrl: "http://192.168.178.38:1312",
+  // apiUrl: "http://localhost:1312",
+  apiUrl: "http://192.168.178.38:1312",
   startTime: new Date(),
 
   loopDelay: 2000,
@@ -48,15 +48,18 @@ let index = {
     fetch(index.apiUrl)
       .then((data) => data.json())
       .then((record) => {
+        console.log(record);
+
         index.updateElement("celsius", Number(record.CELSIUS).toFixed(2));
         index.updateElement("humidity", Number(record.HUMIDITY).toFixed(2));
 
         const labels = [...Array(index.loopCount).keys()].map((num) => num + 1);
 
         index.gasChart.data.labels = labels;
-        index.gasChart.data.datasets[2].data.push(Number(record.CH4));
-        index.gasChart.data.datasets[1].data.push(Number(record.SMOKE));
-        index.gasChart.data.datasets[0].data.push(Number(record.ALCOHOL));
+        index.gasChart.data.datasets[2].data.push(Number(record.SOUND));
+        // index.gasChart.data.datasets[2].data.push(Number(record.CH4));
+        // index.gasChart.data.datasets[1].data.push(Number(record.SMOKE));
+        // index.gasChart.data.datasets[0].data.push(Number(record.ALCOHOL));
         index.gasChart.data.datasets[3].data.push(Number(record.MOV));
         index.gasChart.data.datasets[4].data.push(Number(record.CELSIUS));
         index.gasChart.update();
