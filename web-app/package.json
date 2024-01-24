@@ -4,7 +4,7 @@
   "main": "public/index.html",
   "scripts": {
     "dev": "live-server",
-    "start": "node_modules/.bin/electron ./public/index.html"
+    "start": "node_modules/.bin/electron ./public/main.js"
   },
   "devDependencies": {
     "child_process": "^1.0.2",
