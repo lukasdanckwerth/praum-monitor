@@ -121,9 +121,9 @@ let index = {
           percentage.humidity
         );
 
-        console.log("loop", index.loopCount);
-        console.log("percentage", percentage);
-        console.log("averages", index.averages);
+        // console.log("loop", index.loopCount);
+        // console.log("percentage", percentage);
+        // console.log("averages", index.averages);
 
         index.radar.data.datasets[0].data = [
           index.averages.co2,

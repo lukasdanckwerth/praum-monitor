@@ -7,6 +7,7 @@ import os.path
 
 
 class _RequestHandler(BaseHTTPRequestHandler):
+
     def _set_headers(self):
         self.send_response(HTTPStatus.OK.value)
         self.send_header('Content-type', 'application/json')
@@ -17,9 +18,7 @@ class _RequestHandler(BaseHTTPRequestHandler):
 
         the_path = "/srv/praum-monitor/data/current_record.json"
 
-        data = {
-            "some": 12
-        }
+        data = {"empty": True}
 
         try:
             if os.path.isfile(the_path):
@@ -57,7 +56,7 @@ def run_server():
             httpd.serve_forever()
             print("Server left infinite request loop")
 
-    thread = Thread(target=serve_forever, args=(httpd,))
+    thread = Thread(target=serve_forever, args=(httpd, ))
     thread.setDaemon(True)
     thread.start()
 
