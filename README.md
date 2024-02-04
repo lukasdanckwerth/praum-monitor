@@ -70,9 +70,9 @@
 | Pin 30           |             | Climate Sensor GND       |
 | Pin 2            |             | Climate Sensor VCC (5V)  |
 | Pin              |             | MH-Z19 V+ (5V)           |
-| Pin              |             | MH-Z19 V- (GND)          |
-| Pin / GPIO       |             | MH-Z19 Rxd (Digital In)  |
-| Pin / GPIO       |             | MH-Z19 Txd (Digital Out) |
+| Pin 6            |             | MH-Z19 V- (GND)          |
+| Pin 22 / GPIO 25 |             | MH-Z19 PWM (Digital Out) |
+| Pin 16 / GPIO 23 |             | Button                |
 
 ## Development
 

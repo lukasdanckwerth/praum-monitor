@@ -2,33 +2,26 @@ const lineWidth = 6;
 const alphaHex = "77";
 const alphaHexPoints = "77";
 
+var data1 = [];
+var data2 = [];
+
 const gasChartConfig = {
   type: "bar",
   data: {
     labels: [],
     datasets: [
       {
-        label: "CO2",
-        data: [],
+        label:
+          "CO2                                                            ",
+        data: data1,
         tension: 0.1,
-        borderColor: "#99999999",
+        borderColor: "#87CEFA66",
         borderWidth: 2,
         borderRadius: 5,
         borderSkipped: false,
-        backgroundColor: "#99999966",
+        backgroundColor: "#87CEFA66",
         yAxisID: "y",
         order: 2,
-      },
-      {
-        label: "Movement",
-        type: "line",
-        data: [],
-        tension: 0.3,
-        borderColor: "#6610f2" + alphaHex,
-        borderWidth: lineWidth,
-        backgroundColor: "#6610f2" + alphaHexPoints,
-        yAxisID: "yMovement",
-        order: 1,
       },
       {
         label: "Temperature",
@@ -41,45 +34,48 @@ const gasChartConfig = {
         yAxisID: "yTemperature",
         order: 0,
       },
-      {
-        label: "Sound",
-        type: "line",
-        data: [],
-        tension: 0.3,
-        borderColor: "#435Ba8" + alphaHex,
-        borderWidth: lineWidth,
-        backgroundColor: "#435Ba8" + alphaHexPoints,
-        yAxisID: "ySound",
-        order: 0,
-      },
     ],
   },
   options: {
     responsive: true,
     maintainAspectRatio: false,
-
     animation: true,
 
+    elements: {
+      point: {
+        radius: 0,
+      },
+    },
+
+    plugins: {
+      legend: {
+        reverse: true,
+        labels: {
+          font: {
+            size: 20,
+          },
+        },
+      },
+    },
     scales: {
       x: {
         stacked: true,
+        grid: {
+          drawOnChartArea: false, // only want the grid lines for one axis to show up
+        },
+        afterFit(scale) {
+          scale.height = 30;
+        },
       },
       y: {
         stacked: true,
         beginAtZero: true,
         // type: "logarithmic",
+        min: 0,
+        max: 3000,
 
         afterFit(scale) {
-          scale.width = 44;
-        },
-      },
-      yMovement: {
-        display: false,
-        stacked: false,
-        min: 0,
-        max: 1.2,
-        ticks: {
-          display: false,
+          scale.width = 60;
         },
       },
 
@@ -91,15 +87,8 @@ const gasChartConfig = {
         // afterFit(scale) {
         //   scale.width = 90;
         // },
-      },
-
-      ySound: {
-        display: false,
-        stacked: false,
-        min: 0,
-        max: 1.2,
-        ticks: {
-          display: false,
+        grid: {
+          drawOnChartArea: false, // only want the grid lines for one axis to show up
         },
       },
     },

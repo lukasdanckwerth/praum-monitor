@@ -73,12 +73,21 @@
 
       <div class="row">
         <div class="col-4 text-center">
-          <div class="chart-gauge"></div>
           <div style="font-size: 30px; margin-top: -10px">Co2</div>
+          <div class="chart-gauge"></div>
+
+          <div style="font-size: 30px"><strong id="co2">0</strong> ppm</div>
         </div>
         <div class="col-3">
-          <div class="temperature-gauge"></div>
           <div style="font-size: 30px; margin-top: -10px">Temparature</div>
+          <div class="temperature-gauge"></div>
+
+          <div style="font-size: 30px">
+            <strong id="celsius">-</strong> °C (<strong id="humidity">
+              -
+            </strong>
+            &nbsp;%&nbsp;r.F.)
+          </div>
         </div>
         <div
           class="col-3"
@@ -87,27 +96,26 @@
           <canvas id="radar" class="mx-auto"></canvas>
         </div>
 
-        <div class="col-2" style="text-align: right">
+        <div class="col-2" style="text-align: right; font-size: 30px">
           <div><span id="start-time">0</span></div>
           <br />
           <div>Uptime: <strong id="time-elapsed">0</strong></div>
           <div>Loop: <strong id="loop-count">0</strong></div>
-          <br />
-          <div>
-            <label style="text-align: right; float: right">
-              <strong id="celsius">-</strong> °C
-            </label>
-            <br />
-            <label style="float: right">
-              <strong id="humidity">-</strong> % r.F.
-            </label>
-          </div>
+          <!-- <br /> -->
         </div>
       </div>
 
       <div class="row mt-4">
-        <div class="col-12" style="height: 540px; width: 1900px">
+        <div
+          class="col-12"
+          style="height: 540px; width: 1900px; position: relative"
+        >
+          <div id="gas-chart-legend"></div>
           <canvas id="gas-chart"></canvas>
+          <canvas
+            id="other-chart"
+            style="position: absolute; top: 0; left: 0"
+          ></canvas>
         </div>
       </div>
 
@@ -127,6 +135,7 @@
     <script src="js/index.js"></script>
 
     <script src="js/gas-chart.js"></script>
+    <script src="js/other-chart.js"></script>
     <script src="js/co2-gauge.js"></script>
     <script src="js/temperature-gauge.js"></script>
 
@@ -143,6 +152,7 @@
       }
 
       createChart("gasChart", "gas-chart", gasChartConfig);
+      createChart("otherChart", "other-chart", otherChartConfig);
 
       const labels = ["Co2", "Mov", "Sound", "Temperature", "Humidity"];
       const config = {

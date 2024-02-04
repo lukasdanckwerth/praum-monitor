@@ -6,7 +6,8 @@ class SoundSensor():
 
     READ_TOTAL_TIME = 1  # 1 second
     READ_SAMPLE_TIMES = 200  # define how many samples you are going to take in normal operation
-    DEVIATION = 0.5
+
+    VALID_THRESHOLD = 0.051  # dt. Abweichung
 
     def __init__(self, gpio=18):
         self.gpio = gpio
@@ -35,3 +36,4 @@ class SoundSensor():
         value_rounded = round(value_reversed, 2)
 
         return value_rounded
+

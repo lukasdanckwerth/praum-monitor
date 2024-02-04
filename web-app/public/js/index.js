@@ -15,6 +15,13 @@ let index = {
     humidity: 0,
   },
 
+  sumLoop: 0,
+  movementCurr: 0,
+  movementSum: 0,
+  soundCurr: 0,
+  soundSum: 0,
+  loopIterations: 2,
+
   startTimeFormatted() {
     return [
       new Date().toLocaleDateString("de-DE", {
@@ -51,8 +58,6 @@ let index = {
   },
 
   loop() {
-    console.log("averages", index.averages);
-
     index.loopCount += 1;
     index.loopTimer = setTimeout(index.loop, index.loopDelay);
 
@@ -61,24 +66,68 @@ let index = {
     const tempMin = 15;
     const tempMax = 25;
 
+    const gradient = document
+      .getElementById("gas-chart")
+      .getContext("2d")
+      .createLinearGradient(0, 540, 0, 0);
+
+    gradient.addColorStop(0, "#87CEFA66");
+    gradient.addColorStop(0.4, "#87CEFA66");
+    gradient.addColorStop(0.5, "#FFC10766");
+    gradient.addColorStop(0.65, "#FFC10766");
+    gradient.addColorStop(0.75, "#dc354566");
+    gradient.addColorStop(1, "#dc354566");
+
     fetch(index.apiUrl)
       .then((data) => data.json())
       .then((record) => {
         console.log(record);
 
-        index.updateElement("celsius", Number(record.CELSIUS).toFixed(2));
-        index.updateElement("humidity", Number(record.HUMIDITY).toFixed(2));
+        index.sumLoop += 1;
+
+        index.updateElement("celsius", Number(record.CELSIUS).toFixed(1));
+        index.updateElement("humidity", Number(record.HUMIDITY).toFixed(1));
+        index.updateElement("co2", Number(record.CO2).toFixed(0));
 
         const labels = [...Array(index.loopCount).keys()].map((num) => num + 1);
-
+        index.gasChart.data.datasets[0].backgroundColor = gradient;
         index.gasChart.data.labels = labels;
-        index.gasChart.data.datasets[0].data.push(Number(record.CO2) / 2);
-        index.gasChart.data.datasets[1].data.push(Number(record.MOV));
-        index.gasChart.data.datasets[2].data.push(Number(record.CELSIUS));
-        index.gasChart.data.datasets[3].data.push(Number(record.SOUND));
+        index.gasChart.data.datasets[0].data.push(Number(record.CO2));
+        index.gasChart.data.datasets[1].data.push(Number(record.CELSIUS));
         index.gasChart.update();
 
-        const co2Gauge = Number(record.CO2 || 0) / 3000;
+        index.movementSum += record.MOV;
+        index.soundSum += record.SOUND;
+
+        console.log("sumLoop", index.sumLoop);
+        console.log("movementCurr", index.movementCurr);
+        console.log("movementSum", index.movementSum);
+
+        if (index.sumLoop == index.loopIterations) {
+          index.movementCurr = index.movementSum / index.loopIterations;
+          index.movementSum = 0;
+
+          index.soundCurr = index.soundSum / index.loopIterations;
+          index.soundSum = 0;
+
+          index.sumLoop = 0;
+
+          const labels2 = [
+            ...Array(Math.floor(index.loopCount / index.loopIterations)).keys(),
+          ].map((num) => num + 1);
+
+          console.log("labels2", labels2);
+
+          index.otherChart.data.labels = labels2;
+          index.otherChart.data.datasets[0].data.push(index.movementCurr);
+          index.otherChart.data.datasets[1].data.push(index.soundCurr);
+          index.otherChart.update();
+        }
+
+        // make gauge min to 400
+        const co2Value = Math.max(Number(record.CO2 || 0), 400);
+        const co2Gauge = (co2Value - 400) / (3000 - 400);
+
         gaugeChart.animateTo(co2Gauge);
 
         var temperatureGauge =

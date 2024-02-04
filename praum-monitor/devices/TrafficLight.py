@@ -4,7 +4,7 @@ from time import sleep
 
 class TrafficLight:
     warning_varlue = 0.5
-    alert_varlue = 0.8
+    alert_varlue = 0.75
 
     def __init__(self, gpio_green, gpio_yellow, gpio_red):
         self.gpio_green = gpio_green
