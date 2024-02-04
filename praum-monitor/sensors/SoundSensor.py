@@ -5,7 +5,7 @@ import RPi.GPIO as GPIO
 class SoundSensor():
 
     READ_TOTAL_TIME = 1  # 1 second
-    READ_SAMPLE_TIMES = 500  # define how many samples you are going to take in normal operation
+    READ_SAMPLE_TIMES = 200  # define how many samples you are going to take in normal operation
     DEVIATION = 0.5
 
     def __init__(self, gpio=18):
@@ -23,11 +23,15 @@ class SoundSensor():
         rel_value = raw_value / self.READ_SAMPLE_TIMES
 
         value_reversed = (1 - rel_value)
+
+        if (value_reversed < 0.051):
+            value_reversed = 0
+        else:
+            value_reversed
+        
+        value_reversed = value_reversed * 2
+        value_reversed = min(value_reversed, 1)
+
         value_rounded = round(value_reversed, 2)
 
-        # raw_value = GPIO.input(self.gpio)
-
-        if value_rounded < 0.051:
-            return 0
-        else:
-            return value_rounded
+        return value_rounded

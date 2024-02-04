@@ -1,6 +1,6 @@
 let index = {
-  // apiUrl: "http://localhost:1312",
-  apiUrl: "http://192.168.178.38:1312",
+  apiUrl: "http://localhost:1312",
+  // apiUrl: "http://192.168.178.38:1312",
   startTime: new Date(),
 
   loopDelay: 2000,
