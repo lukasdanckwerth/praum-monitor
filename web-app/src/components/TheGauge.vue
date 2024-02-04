@@ -1,8 +1,11 @@
+<script>
+import * as d3 from "d3";
+
 const percentToDegree = (p) => p * 360;
 const degreeToRadian = (d) => (d * Math.PI) / 180;
 const percentToRadian = (p) => degreeToRadian(percentToDegree(p));
 
-class Needle {
+export class Needle {
   constructor(props) {
     this.svg = props.svg;
     this.group = this.svg.append("g");
@@ -17,23 +20,21 @@ class Needle {
 
     this.group
       .append("circle")
-      .attr("class", "c-chart-gauge__needle-base")
+      .style("fill", "#555555")
       .attr("cx", 0)
       .attr("cy", 0)
       .attr("r", this.radius);
 
     this.group
       .append("path")
-      .attr("class", "c-chart-gauge__needle")
+      .style("fill", "#555555")
       .attr("d", this._getPath(0));
   }
 
   animateTo(p) {
     this.group
       .transition()
-      // .delay(500)
       .ease(d3.easeCubic)
-      // .duration(2000)
       .select("path")
       .tween("progress", () => {
         const self = this;
@@ -61,12 +62,45 @@ class Needle {
   }
 }
 
-class GaugeChart {
-  constructor(props) {
-    this.svg = props.svg;
+export default {
+  name: "TheGauge",
+  props: {
+    value: {
+      type: Number,
+      required: true,
+    },
+    title: {
+      type: String,
+      default: "Title",
+    },
+    labelMin: {
+      type: String,
+      default: "Min",
+    },
+    labelMax: {
+      type: String,
+      default: "Max",
+    },
+    stopColor1: {
+      type: String,
+      default: null,
+    },
+    stopColor2: {
+      type: String,
+      default: null,
+    },
+    stopColor3: {
+      type: String,
+      default: null,
+    },
+  },
+  mounted() {
+    const container = d3.select(this.$refs.gauge);
+    this.svg = container.append("svg").attr("class", "c-chart-gauge");
+
     this.group = this.svg.append("g");
-    this.outerRadius = props.outerRadius;
-    this.innerRadius = props.innerRadius;
+    this.outerRadius = 160;
+    this.innerRadius = 100;
     this.width = this.outerRadius * 2;
     this.height = this.outerRadius * 1.2;
 
@@ -77,13 +111,13 @@ class GaugeChart {
       x: this.outerRadius,
       y: this.outerRadius,
     });
-  }
 
-  render() {
+    const id = "c-chart-gauge__gradient" + Math.random();
+    console.log("id", id);
     const gradient = this.svg
       .append("defs")
       .append("linearGradient")
-      .attr("id", "c-chart-gauge__gradient");
+      .attr("id", id);
 
     const arc = d3.arc();
 
@@ -92,19 +126,17 @@ class GaugeChart {
     gradient
       .append("stop")
       .attr("offset", "5%")
-      .attr("class", "c-chart-gauge__gradient-stop1");
+      .attr("stop-color", "" + this.stopColor1);
+
     gradient
       .append("stop")
-      .attr("offset", "42%")
-      .attr("class", "c-chart-gauge__gradient-stop2");
-    gradient
-      .append("stop")
-      .attr("offset", "58%")
-      .attr("class", "c-chart-gauge__gradient-stop3");
+      .attr("offset", "50%")
+      .attr("stop-color", "" + this.stopColor2);
+
     gradient
       .append("stop")
       .attr("offset", "100%")
-      .attr("class", "c-chart-gauge__gradient-stop4");
+      .style("stop-color", "" + this.stopColor3);
 
     arc
       .innerRadius(this.innerRadius)
@@ -117,30 +149,24 @@ class GaugeChart {
       .attr("height", this.height)
       .append("path")
       .attr("d", arc)
-      .attr("fill", "url(#c-chart-gauge__gradient)")
+      .attr("fill", "url(#" + id + ")")
       .attr("transform", `translate(${this.outerRadius},${this.outerRadius})`);
 
     this.group.append("text").attr("x", 7).attr("y", 180).text("Clean");
     this.group.append("text").attr("x", 270).attr("y", 180).text("Dirty");
 
     this.needle.render();
-  }
+  },
+  watch: {
+    value(newValue) {
+      this.needle.animateTo(newValue);
+    },
+  },
+};
+</script>
 
-  animateTo(p) {
-    this.needle.animateTo(p);
-  }
-}
+<template>
+  <div ref="gauge" class="gauge"></div>
+</template>
 
-const svg = d3
-  .select(".chart-gauge")
-  .append("svg")
-  .attr("class", "c-chart-gauge");
-
-const gaugeChart = new GaugeChart({
-  svg: svg,
-  outerRadius: 160,
-  innerRadius: 100,
-});
-
-gaugeChart.render();
-gaugeChart.animateTo(1);
+<style scoped></style>

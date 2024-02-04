@@ -1,0 +1,12 @@
+body {
+  background-color: gray;
+}
+
+.app {
+  background-color: white;
+  width: 1900px;
+  height: 1020px;
+  margin: 0 auto;
+  padding: 1em;
+  overflow: hidden;
+}
