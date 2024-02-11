@@ -32,7 +32,7 @@ export default {
     this.soundAggr = 0;
     this.soundCurr = 0;
     this.radarData = [];
-    this.groupSize = 2;
+    this.groupSize = 5;
     this.avrgs = {
       co2: 0,
       mov: 0,
@@ -135,7 +135,7 @@ export default {
           ];
           this.$refs.radar.chart.update();
 
-          this.fetchTimer = setTimeout(this.fetchData, 2000);
+          this.fetchTimer = setTimeout(this.fetchData, 3000);
         });
     },
     average(old, curr) {
@@ -163,8 +163,8 @@ export default {
   <main>
     <div class="app">
       <div class="row">
-        <div class="col-4 text-center">
-          <div style="font-size: 30px; margin-top: -10px">Co2</div>
+        <div class="col-3 text-center">
+          <div style="margin-top: -10px">Co2</div>
 
           <TheGauge
             :value="co2GaugeValue"
@@ -175,12 +175,12 @@ export default {
             stopColor3="dimgray"
           />
 
-          <div style="font-size: 30px">
+	  <div> 
             <strong id="co2">{{ currCo2 }}</strong> ppm
           </div>
         </div>
         <div class="col-3 text-center">
-          <div style="font-size: 30px; margin-top: -10px">Temparature</div>
+          <div style="margin-top: -10px">Temparature</div>
 
           <TheGauge
             :value="co2GaugeValue"
@@ -191,7 +191,7 @@ export default {
             stopColor3="#dc3545"
           />
 
-          <div style="font-size: 30px">
+	  <div> 
             <strong>{{ currCelsius }}</strong> °C (
             <strong>
               {{ currHumidity }}
@@ -206,9 +206,8 @@ export default {
           <TheRadar ref="radar" class="mx-auto" />
         </div>
 
-        <div class="col-2" style="text-align: right; font-size: 30px">
-          <div>{{ startTimeFormatted }}</div>
-          <br />
+        <div class="col-3" style="text-align: right">
+          <div class="mb-4">{{ startTimeFormatted }}</div>
           <div>
             Uptime: <strong> {{ timeElapsed }}</strong>
           </div>

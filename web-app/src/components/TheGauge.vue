@@ -152,8 +152,8 @@ export default {
       .attr("fill", "url(#" + id + ")")
       .attr("transform", `translate(${this.outerRadius},${this.outerRadius})`);
 
-    this.group.append("text").attr("x", 7).attr("y", 180).text("Clean");
-    this.group.append("text").attr("x", 270).attr("y", 180).text("Dirty");
+    this.group.append("text").attr("x", 7).attr("y", 180).attr("font-size", 24).text(this.labelMin);
+    this.group.append("text").attr("x", 270).attr("y", 180).attr("font-size", 24).text(this.labelMax);
 
     this.needle.render();
   },
