@@ -183,7 +183,7 @@ export default {
           <div style="margin-top: -10px">Temparature</div>
 
           <TheGauge
-            :value="co2GaugeValue"
+            :value="tempRelValue"
             label-min="Cold"
             label-max="Hot"
             stopColor1="DodgerBlue"
